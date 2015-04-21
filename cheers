@@ -1,2 +1,24 @@
 #!/usr/bin/env ruby
-print "I'd cheer for you, if only I knew who you were :("
+
+input = ARGV # ARGV holds the command line arguments that were passed in
+
+if input.empty?
+  print "I'd cheer for you, if only I knew who you were :("
+else
+  parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
+  if input
+  elsif input.size == 1
+    if input[0].empty?
+      print "I'd cheer for you, if only I knew who you were :("
+    elsif input[0].size == parsed_input.size
+      print input[0]
+    else
+      print "I'd cheer for you, if only I knew who you were :("
+    end
+  else
+    print "has two args"
+    #do some stuff
+  end
+end
+
+
