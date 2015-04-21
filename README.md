@@ -30,6 +30,8 @@ If there was no input, the program would instead print out:
 
 > I'd cheer for you, if only I knew who you were :(
 
+> Try again with `./cheers [Name] [MM/DD Birthday]`
+
 After printing out the user's cheer, the program asks:
 
 > Hey, Bryan, what's your birthday? (mm/dd)
