@@ -2,6 +2,7 @@
 
 input = ARGV # ARGV holds the command line arguments that were passed in
 
+
 if input.empty?
   print "I'd cheer for you, if only I knew who you were :("
 else
@@ -23,9 +24,11 @@ else
   elsif input.size == 2
     if (!/\w+/.match(input[0]) && !/\w+(-)\w+/.match(input[0])) && !/\d{2}(\/)\d{2}/.match(input[1])
       print "I'd cheer for you, if only I knew who you were :("
-      return print "I would wish you a Happy Birthday, if I knew when that was!"
+      print "I would wish you a Happy Birthday, if I knew when that was!"
+      exit
     elsif !/\d{2}(\/)\d{2}/.match(input[1])
-      return print "I would wish you a Happy Birthday, if I knew when that was!"
+      print "I would wish you a Happy Birthday, if I knew when that was!"
+      exit
     end
     input_caps = input[0].upcase
     input_caps.each_char { |x|
@@ -38,9 +41,31 @@ else
       end
     }
     puts "#{input_caps}'s just GRAND!"
-  else
-    print "I'd cheer for you, if only I knew who you were :("
+    if !!/\d{2}(\/)\d{2}/.match(input[1])
+      require 'date'
+      today = Date.today
+      bday = Date.parse(input[1])
+      year = bday.year
+      month = bday.month
+      day = bday.mday
+      parsed_date = Date.valid_date?(year,month,day)
+      if parsed_date == true
+        relational = today - bday
+        relational_arr = relational.to_s.split('/')
+        difference = relational_arr[0]
+        if !!/(-)/.match(difference)
+          days_till = relational_arr[0].to_i.abs
+          print "Awesome! Your birthday is in #{days_till} days! Happy Birthday in advance!"
+        else
+          bday_next_year = 365 - days_till
+          print "Awesome! Your birthday is in #{bday_next_year} days! Happy birthday in advance!"
+        end
+      else
+        print "You gave an invalid date!"
+      end
+    else
+      print "I'd cheer for you, if only I knew who you were :("
+    end
   end
 end
-
 
