@@ -16,7 +16,7 @@ Give me an... A
 Give me a... B
 Give me a... B
 Give me a... Y
-Abby's just GRAND!
+ABBY's just GRAND!
 
 Awesome! Your birthday is in 127 days! Happy Birthday in advance!
 EOS
@@ -34,7 +34,7 @@ Give me an... A
 Give me a... B
 Give me a... B
 Give me a... Y
-Abby's just GRAND!
+ABBY's just GRAND!
 EOS
     assert_equal expected, output
   end
@@ -49,11 +49,11 @@ Give me a... B
 Give me a... B
 Give me a... Y
 Give me a... Z
-Give me a... A
+Give me an... A
 Give me a... B
 Give me a... B
 Give me a... Y
-Abby-Zabby's just GRAND!
+ABBY-ZABBY's just GRAND!
 EOS
     assert_equal expected, output
   end
@@ -95,7 +95,7 @@ Give me an... A
 Give me a... B
 Give me a... B
 Give me a... Y
-Abby's just GRAND!
+ABBY's just GRAND!
 
 Awesome! Your birthday is in 127 days! Happy Birthday in advance!
 EOS
