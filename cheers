@@ -3,8 +3,15 @@
 input = ARGV # ARGV holds the command line arguments that were passed in
 
 
-if input.empty?
+if input.size == 0 && input.empty?
   print "I'd cheer for you, if only I knew who you were :("
+elsif !!/\d/.match(input[0]) && input[1].nil?
+  print "I'd cheer for you, if only I knew who you were :("
+elsif !!/\s/.match(input[0]) && input[1].nil?
+  print "I'd cheer for you, if only I knew who you were :("
+elsif !!/\W/.match(input[0]) && !!/\W/.match(input[1])
+  puts "I'd cheer for you, if only I knew who you were :("
+  puts "I would wish you a Happy Birthday, if I knew when that was!"
 else
   parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
   if input.size == 1 && input[0].empty?
@@ -52,19 +59,21 @@ else
       if parsed_date == true
         relational = today - bday
         relational_arr = relational.to_s.split('/')
+        #difference = relational.to_s.split('/').chomp
         difference = relational_arr[0]
         if !!/(-)/.match(difference)
-          days_till = relational_arr[0].to_i.abs
-          print "Awesome! Your birthday is in #{days_till} days! Happy Birthday in advance!"
+          days_till = difference.to_i.abs
+          puts "\nAwesome! Your birthday is in #{days_till} days! Happy Birthday in advance!"
         else
-          bday_next_year = 365 - days_till
-          print "Awesome! Your birthday is in #{bday_next_year} days! Happy birthday in advance!"
+          bday_next_year = 365 - difference.to_i.abs
+          print "\nAwesome! Your birthday is in #{bday_next_year} days! Happy birthday in advance!"
         end
       else
         print "You gave an invalid date!"
       end
     else
       print "I'd cheer for you, if only I knew who you were :("
+      puts "I would wish you a Happy Birthday, if I knew when that was!"
     end
   end
 end

@@ -11,7 +11,7 @@ class TestCheersIntegration < Minitest::Test
   end
 
   def test_0b_two_valid_arguments
-    output = `./cheers Abby 02/05`
+    output = `./cheers Abby 08/27`
     expected = <<EOS
 Give me an... A
 Give me a... B
@@ -66,7 +66,7 @@ EOS
       # " " (whitespace)
 
   def test_1c_one_invalid_argument
-    output = `./cheers 02/05`
+    output = `./cheers 08/27`
     expected = "I'd cheer for you, if only I knew who you were :("
     assert_equal expected, output
   end
@@ -90,7 +90,7 @@ EOS
   end
 
   def test_2a_two_valid_arguments_both_valid
-    output = `./cheers Abby 02/05`
+    output = `./cheers Abby 08/27`
     expected = <<EOS
 Give me an... A
 Give me a... B
@@ -110,13 +110,13 @@ EOS
   end
 
   def test_2c_two_arguments_first_invalid
-    output = `./cheers &#(@(:::___++--`
+    output = `./cheers &#(@(:::++`
     expected = "I'd cheer for you, if only I knew who you were :("
     assert_equal expected, output
   end
 
   def test_2d_two_arguments_none_valid
-    output = `./cheers &#(@(::: %$##%%`
+    output = `./cheers "&#(@(:::" "%$##%%"`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
 I would wish you a Happy Birthday, if I knew when that was!
