@@ -8,20 +8,36 @@ else
   parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
   if input.size == 1 && input[0].empty?
     print "I'd cheer for you, if only I knew who you were :("
-  elsif input[0].size == parsed_input.size
+  elsif (input[0].size == parsed_input.size) && (input.size == 1)
     input_caps = input[0].upcase
     input_caps.each_char { |x|
       if !!/A|E|I|O|U/.match(x)
-        puts "Give me an... #{x}" 
+        puts "Give me an... #{x}"
       elsif !!/-/.match(x)
-        #if name has dash, do nothing
+        #if name has dash, don't print the dash in the cheer
       else
-        puts "Give me a... #{x}" 
+        puts "Give me a... #{x}"
       end
     }
     puts "#{input_caps}'s just GRAND!"
   elsif input.size == 2
-    print "has two args"
+    if (!/\w+/.match(input[0]) && !/\w+(-)\w+/.match(input[0])) && !/\d{2}(\/)\d{2}/.match(input[1])
+      print "I'd cheer for you, if only I knew who you were :("
+      return print "I would wish you a Happy Birthday, if I knew when that was!"
+    elsif !/\d{2}(\/)\d{2}/.match(input[1])
+      return print "I would wish you a Happy Birthday, if I knew when that was!"
+    end
+    input_caps = input[0].upcase
+    input_caps.each_char { |x|
+      if !!/A|E|I|O|U/.match(x)
+        puts "Give me an... #{x}"
+      elsif !!/-/.match(x)
+        #if name has dash, don't print the dash in the cheer
+      else
+        puts "Give me a... #{x}"
+      end
+    }
+    puts "#{input_caps}'s just GRAND!"
   else
     print "I'd cheer for you, if only I knew who you were :("
   end

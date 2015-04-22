@@ -1,5 +1,6 @@
-require 'minitest/autorun'
-require 'bundler/setup'
+require_relative 'test_helper'
+
+#require 'bundler/setup'
 
 class TestCheersIntegration < Minitest::Test
 
@@ -103,7 +104,7 @@ EOS
   end
 
   def test_2b_two_arguments_second_invalid
-    output = `./cheers Abby $%8380#220^^%$9384840pkdkd=`
+    output = `./cheers Abby $%{}#@`
     expected = "I would wish you a Happy Birthday, if I knew when that was!"
     assert_equal expected, output
   end
@@ -115,7 +116,7 @@ EOS
   end
 
   def test_2d_two_arguments_none_valid
-    output = `./cheers &#(@(:::___++-- 9%$##%GG#TT%`
+    output = `./cheers &#(@(::: %$##%%`
     expected = <<EOS
 I'd cheer for you, if only I knew who you were :(
 I would wish you a Happy Birthday, if I knew when that was!
