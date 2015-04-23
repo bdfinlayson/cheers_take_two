@@ -11,6 +11,8 @@ EOS
 class Guard
   attr_accessor :name
   attr_accessor :bday
+  attr_accessor :input
+  attr_accessor :parsed_input
 
   def initialize(input)
     @name = input[0]
