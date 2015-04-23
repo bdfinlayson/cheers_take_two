@@ -8,34 +8,69 @@ I'd cheer for you, if only I knew who you were :(
 I would wish you a Happy Birthday, if I knew when that was!
 EOS
 
+class Guard
+  attr_accessor :name
+  attr_accessor :bday
 
-if input.size == 0 && input.empty?
+  def initialize(input)
+    @name = input[0]
+    @bday = input[1]
+    @input = input
+   # @parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
+  end
+
+  def input_is_empty?
+    true if @input.size == 0 && @input.empty?
+  end
+
+  def first_input_has_numbers_and_no_second_arg?
+    true if !!/\d/.match(@input[0]) && @input[1].nil?
+  end
+
+  def first_input_has_spaces_and_no_second_arg?
+    true if !!/\s/.match(@input[0]) && @input[1].nil?
+  end
+
+  def first_and_second_input_have_non_word_or_number_characters?
+    true if !!/\W/.match(@input[0]) && !!/\W/.match(@input[1])
+  end
+
+  def input_has_an_empty_string?
+    true if @input.size == 1 && @input[0].empty?
+  end
+
+end
+
+guard = Guard.new(input)
+
+if guard.input_is_empty? == true
   print NO_NAME
   exit
 end
 
 
-if !!/\d/.match(input[0]) && input[1].nil?
+if guard.first_input_has_numbers_and_no_second_arg? == true
   print NO_NAME
   exit
 end
 
-if !!/\s/.match(input[0]) && input[1].nil?
+if guard.first_input_has_spaces_and_no_second_arg? == true
   print NO_NAME
   exit
 end
 
-if !!/\W/.match(input[0]) && !!/\W/.match(input[1])
+if guard.first_and_second_input_have_non_word_or_number_characters? == true
   print NO_NAME_OR_BDAY
   exit
 end
 
-parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
 
-if input.size == 1 && input[0].empty?
+if guard.input_has_an_empty_string? == true
   print NO_NAME
   exit
 end
+
+parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
 
 if (input[0].size == parsed_input.size) && (input.size == 1)
   input_caps = input[0].upcase
