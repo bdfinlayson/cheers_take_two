@@ -18,7 +18,7 @@ class Guard
     @name = input[0]
     @bday = input[1]
     @input = input
-   # @parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
+    @parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/] unless input[0].nil?
   end
 
   def input_is_empty?
@@ -48,62 +48,53 @@ class Guard
   def input_has_invalid_date?
     true if !/\d{2}(\/)\d{2}/.match(@input[1])
   end
+
+  def input_and_parsed_input_are_equal_and_input_size_is_one?
+    true if (@input[0].size == @parsed_input.size) && (@input.size == 1)
+  end
+
+  def input_has_two_args?
+    true if @input.size == 2
+  end
 end
 
-guard = Guard.new(input)
+class Give_Cheers
+  attr_accessor :name
+  attr_accessor :bday
 
-if guard.input_is_empty? ||
-    guard.first_input_has_numbers_and_no_second_arg? ||
-    guard.first_input_has_spaces_and_no_second_arg? ||
-    guard.input_has_an_empty_string?
-  print NO_NAME
-  exit
+  def initialize(input)
+    @name = input[0]
+    @bday = input[1]
+    @input_caps = input[0].upcase unless input[0].nil?
+  end
+
+  def name
+    @input_caps.each_char { |x|
+      if !!/A|E|I|O|U/.match(x)
+        puts "Give me an... #{x}"
+      elsif !!/-/.match(x)
+        #if name has dash, don't print the dash in the cheer
+      else
+        puts "Give me a... #{x}"
+      end
+    }
+    puts "#{@input_caps}'s just GRAND!"
+  end
 end
 
-if guard.first_and_second_input_have_non_word_or_number_characters? ||
-    guard.input_has_two_invalid_args? == true && input.size == 2
-  print NO_NAME_OR_BDAY
-  exit
-end
+class Give_Birthday
+  require 'date'
+  attr_accessor :bday
 
-if guard.input_has_invalid_date? == true && input.size == 2
-  print NO_BDAY
-  exit
-end
+  def initialize(input)
+    @input = input unless input[1].nil?
+  end
 
-parsed_input = input[0][/[a-zA-Z]*(-)?[a-zA-Z]*/]
+  def is_valid?
+    true if !!/\d{2}(\/)\d{2}/.match(@input[1])
+  end
 
-if (input[0].size == parsed_input.size) && (input.size == 1)
-  input_caps = input[0].upcase
-  input_caps.each_char { |x|
-    if !!/A|E|I|O|U/.match(x)
-      puts "Give me an... #{x}"
-    elsif !!/-/.match(x)
-      #if name has dash, don't print the dash in the cheer
-    else
-      puts "Give me a... #{x}"
-    end
-  }
-  puts "#{input_caps}'s just GRAND!"
-  exit
-end
-
-if input.size == 2
-
-  input_caps = input[0].upcase
-  input_caps.each_char { |x|
-    if !!/A|E|I|O|U/.match(x)
-      puts "Give me an... #{x}"
-    elsif !!/-/.match(x)
-      #if name has dash, don't print the dash in the cheer
-    else
-      puts "Give me a... #{x}"
-    end
-  }
-  puts "#{input_caps}'s just GRAND!"
-
-  if !!/\d{2}(\/)\d{2}/.match(input[1])
-    require 'date'
+  def count_down(input)
     today = Date.today
     bday = Date.parse(input[1])
     year = bday.year
@@ -124,10 +115,43 @@ if input.size == 2
       print "\nAwesome! Your birthday is in #{bday_next_year} days! Happy birthday in advance!"
       exit
     end
-    print "You gave an invalid date!"
-    exit
   end
+end
+
+guard = Guard.new(input)
+cheer = Give_Cheers.new(input)
+birthday = Give_Birthday.new(input)
+
+if guard.input_is_empty? ||
+    guard.first_input_has_numbers_and_no_second_arg? ||
+    guard.first_input_has_spaces_and_no_second_arg? ||
+    guard.input_has_an_empty_string?
+  print NO_NAME
+  exit
+end
+
+if guard.first_and_second_input_have_non_word_or_number_characters? ||
+    guard.input_has_two_invalid_args? && input.size == 2
   print NO_NAME_OR_BDAY
+  exit
+end
+
+if guard.input_has_invalid_date? && input.size == 2
+  print NO_BDAY
+  exit
+end
+
+if guard.input_and_parsed_input_are_equal_and_input_size_is_one?
+  cheer.name
+  exit
+end
+
+if guard.input_has_two_args?
+  cheer.name
+  if birthday.is_valid?
+    birthday.count_down(input)
+  end
+  exit
 end
 
 
