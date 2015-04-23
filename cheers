@@ -39,34 +39,33 @@ class Guard
     true if @input.size == 1 && @input[0].empty?
   end
 
+  def input_has_two_invalid_args?
+    true if (!/\w+/.match(@input[0]) && !/\w+(-)\w+/.match(@input[0])) && !/\d{2}(\/)\d{2}/.match(@input[1])
+  end
+
+  def input_has_invalid_date?
+    true if !/\d{2}(\/)\d{2}/.match(@input[1])
+  end
 end
 
 guard = Guard.new(input)
 
-if guard.input_is_empty? == true
+if guard.input_is_empty? ||
+    guard.first_input_has_numbers_and_no_second_arg? ||
+    guard.first_input_has_spaces_and_no_second_arg? ||
+    guard.input_has_an_empty_string?
   print NO_NAME
   exit
 end
 
-
-if guard.first_input_has_numbers_and_no_second_arg? == true
-  print NO_NAME
-  exit
-end
-
-if guard.first_input_has_spaces_and_no_second_arg? == true
-  print NO_NAME
-  exit
-end
-
-if guard.first_and_second_input_have_non_word_or_number_characters? == true
+if guard.first_and_second_input_have_non_word_or_number_characters? ||
+    guard.input_has_two_invalid_args? == true && input.size == 2
   print NO_NAME_OR_BDAY
   exit
 end
 
-
-if guard.input_has_an_empty_string? == true
-  print NO_NAME
+if guard.input_has_invalid_date? == true && input.size == 2
+  print NO_BDAY
   exit
 end
 
@@ -88,15 +87,6 @@ if (input[0].size == parsed_input.size) && (input.size == 1)
 end
 
 if input.size == 2
-  if (!/\w+/.match(input[0]) && !/\w+(-)\w+/.match(input[0])) && !/\d{2}(\/)\d{2}/.match(input[1])
-    print NO_NAME_OR_BDAY
-    exit
-  end
-
-  if !/\d{2}(\/)\d{2}/.match(input[1])
-    print NO_BDAY
-    exit
-  end
 
   input_caps = input[0].upcase
   input_caps.each_char { |x|
@@ -135,7 +125,7 @@ if input.size == 2
     print "You gave an invalid date!"
     exit
   end
-    print NO_NAME_OR_BDAY
+  print NO_NAME_OR_BDAY
 end
 
 
