@@ -53,12 +53,12 @@ class Guard
     true if (@input[0].size == @parsed_input.size) && (@input.size == 1)
   end
 
-  def input_has_two_args?
+  def input_has_two_valid_args?
     true if @input.size == 2
   end
 end
 
-class Give_Cheers
+class Say_Cheers
   attr_accessor :name
   attr_accessor :bday
 
@@ -82,7 +82,7 @@ class Give_Cheers
   end
 end
 
-class Give_Birthday
+class Say_Birthday
   require 'date'
   attr_accessor :bday
 
@@ -119,8 +119,8 @@ class Give_Birthday
 end
 
 guard = Guard.new(input)
-cheer = Give_Cheers.new(input)
-birthday = Give_Birthday.new(input)
+cheer = Say_Cheers.new(input)
+birthday = Say_Birthday.new(input)
 
 if guard.input_is_empty? ||
     guard.first_input_has_numbers_and_no_second_arg? ||
@@ -146,7 +146,7 @@ if guard.input_and_parsed_input_are_equal_and_input_size_is_one?
   exit
 end
 
-if guard.input_has_two_args?
+if guard.input_has_two_valid_args?
   cheer.name
   if birthday.is_valid?
     birthday.count_down(input)
